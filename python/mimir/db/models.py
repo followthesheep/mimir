@@ -7,7 +7,7 @@
 # Created: Thursday, 27th September 2018 5:09:03 pm
 # License: <<licensename>>
 # Copyright (c) 2018 Brian Cherinka
-# Last Modified: Friday, 28th September 2018 4:55:29 pm
+# Last Modified: Saturday, 29th September 2018 12:12:00 pm
 # Modified By: Brian Cherinka
 
 
@@ -15,10 +15,11 @@ from __future__ import print_function, division, absolute_import
 
 import os
 
-from sqlalchemy import create_engine, MetaData
+from sqlalchemy import create_engine, MetaData, Column
 from sqlalchemy.orm import sessionmaker, scoped_session
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
+from sqlalchemy.types import Integer
 
 
 class DatabaseConnection(object):
@@ -94,3 +95,9 @@ class Catalog1(Base):
 
     star = relationship('Stars', backref='catalog1')
 
+
+class StarView(Base):
+    __tablename__ = 'star_view'
+    __table_args__ = {"autoload": True}
+
+    name = Column(Integer, primary_key=True)

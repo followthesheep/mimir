@@ -86,12 +86,10 @@ CREATE TABLE IF NOT EXISTS `catalog1` (
 );
 INSERT INTO `catalog1` (pk,id,date,vlsr,vz,star_pk) VALUES (1,'1','2017-03-15 00:00:00',125.0,4.0,1);
 INSERT INTO `catalog1` (pk,id,date,vlsr,vz,star_pk) VALUES (2,'2','2017-04-01 00:00:00',500.0,4.0,NULL);
-CREATE VIEW star_view
-as
-select s.name, o.date, k.vlsr as kit_vlsr, k.vz as kit_vz,
-c.vlsr as cat_vlsr, c.vz as cat_vz
-from stars as s join spectra as sp on s.pk=sp.star_pk
+CREATE VIEW star_view as
+select s.name, o.date, k.vlsr as kit_vlsr, k.vz as kit_vz, c.vlsr as cat_vlsr, c.vz as cat_vz
+from stars as s join spectra as sp on sp.star_pk=s.pk
 join observations as o on o.pk=sp.obs_pk
-join starkit as k on o.pk=k.obs_pk
-join catalog1 as c on s.pk=c.star_pk;
+join starkit as k on k.spectra_pk=sp.pk
+join catalog1 as c on c.star_pk=s.pk;
 COMMIT;
